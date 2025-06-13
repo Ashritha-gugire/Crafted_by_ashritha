@@ -18,6 +18,7 @@
             font-family: 'Times New Roman', Times, serif;
             font-size: 16px;
             line-height: 1.6;
+            background-color: #f0f2f5;
         }
 
         /* Headings using Montserrat */
@@ -109,14 +110,9 @@
             display: grid;
             grid-template-columns: 1fr 2fr;
             gap: 2rem;
-            background-color: #f8f9fa;  /* Light grayish background */
+            background-color: #f8f9fa;
             border-radius: 15px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        /* Adding a subtle texture to the page background */
-        body {
-            background-color: #f0f2f5;
         }
 
         .profile-section {
@@ -161,8 +157,126 @@
             text-decoration: underline;
         }
 
+        /* Technical Skills Section */
+        .skills-preview {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skills-preview::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .skills-preview-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .skills-preview h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .skills-preview p {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .skills-link {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .skills-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Work Experience Cards */
+        .work-section {
+            margin: 2rem 0;
+        }
+
+        .work-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .work-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .work-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .work-card h3 {
+            color: #2c5282;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .work-card .company {
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .work-card .duration {
+            font-style: italic;
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .work-card p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
         @media (max-width: 768px) {
             .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .work-cards {
                 grid-template-columns: 1fr;
             }
 
@@ -182,8 +296,9 @@
             <a href="#" class="logo">Computer Science | Data Analysis | Machine Learning</a>
             <div class="nav-links">
                 <a href="index.html">Home</a>
-                <a href="Research.html">Research</a>
+                <a href="researchphase.html">Research</a>
                 <a href="projects.html">Projects</a>
+                <a href="skills.html">Technical Skills</a>
                 <a href="Personal Interests.html">Non-Academic</a>
             </div>
         </div>
@@ -192,29 +307,62 @@
     <div class="hero">
         <div class="hero-content">
             <h1>Ashritha Gugire</h1>
+            <h3>Data Analyst since 2020 and with 4+ years of experience in Data Science, Machine Learning, Research and Development </h3>
+            <h3> Working with Deloitte - Machine Learning Analyst (R&D) </h3>
         </div>
     </div>
 
     <main class="main-content">
         <div class="profile-section">
             <img src="assests/profile-photo.png" alt="Profile Photo" class="profile-image">
-            <p>Data Analyst</p>
-            <p>M.Sc Data Analytics and Engineering</p>
+            <p>Department of Engineering and Computing</p>
             <p>George Mason University</p>
         </div>
 
         <div class="bio-section">
             <h2>About Me</h2>
-            <p>I am a dynamic Data Analytics specialist currently serving as a Research Data Analyst at George Mason University, <a href="https://care.gmu.edu/" target="_blank">Center for Assurance Research and Engineering</a>, with Professors <a href="https://www.gmu.edu/profiles/jauffret-0" target="_blank">Jean Pierre Auffret</a> and <a href="https://business.gmu.edu/profiles/aray8" target="_blank">Abhishek Ray</a>, collaborating with Deloitte.
-                My work centers on applying advanced analytical techniques to urban mobility, knowledge graphs, and agent movement pattern analysis. 
+            <p> Hi there!
+I’m Ashritha, a curious and driven Data Scientist with a strong foundation in computer science and Machine Learning and a passion for solving complex problems with data.
                 I specialize in leveraging AI/ML methods to derive insights that inform decision-making, particularly in urban planning and behavioral analytics.</p>
 
             <p>With an M.Sc. in Data Analytics Engineering from George Mason University, my expertise spans from data analysis methodologies, including Natural Language Processing, Business Intelligence, and anomaly detection. 
             I actively contribute to research initiatives that bridge complex data structures with actionable insights. 
             My approach integrates both inductive and deductive reasoning to simplify multifaceted data challenges, driving impactful outcomes for organizations and research groups.</p>
+        
+        <p>I’m currently a Research Data Analyst at George Mason University, working alongside Deloitte on cutting-edge projects involving urban mobility, behavioral analytics, and knowledge graph development. Whether it’s analyzing agent movement patterns or detecting anomalies across large datasets, I love turning messy data into meaningful insights that can actually drive decisions.</p>
+
+<p>With 4+ years of experience across industries—from tech and consulting to research—I’ve built scalable machine learning pipelines, deployed fraud detection systems, automated reporting workflows, and created interactive dashboards for both technical and executive teams. I bring a mix of technical depth and business thinking to every project. If it involves data, strategy, and a challenge—I’m all in!</p>
+            
+            <!-- Technical Skills Preview Section -->
+            <div class="skills-preview">
+                <div class="skills-preview-content">
+                    <h2>Technical Expertise & Capabilities</h2>
+                    <p>Explore my comprehensive technical skills, tools, and data science capabilities through an interactive knowledge graph visualization</p>
+                    <a href="skills.html" class="skills-link">View Interactive Skills Map →</a>
+                </div>
+            </div>
+
+            <!-- Work Experience Section -->
+            <div class="work-section">
+                <h2>Professional Experience</h2>
+                <div class="work-cards">
+                    <div class="work-card">
+                        <h3>Research Machine Learning Data Analyst</h3>
+                        <div class="company">Deloitte - Intelligence Advanced Research Projects</div>
+                        <div class="duration">Jan 2024 - Present</div>
+                        <p>Collaborating with Deloitte on urban mobility analytics, knowledge graph development, and agent movement pattern analysis. Applied advanced AI/ML techniques for urban planning insights and behavioral analytics.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>Technology Data Analyst</h3>
+                        <div class="company">Infosys - Hyderabad</div>
+                        <div class="duration">2020 - 2022</div>
+                        <p>Worked on complex technology problems involving data structures, cloud computing solutions, and advanced analytics. Developed efficient algorithms and contributed to large-scale data processing systems.</p>
+                    </div>
+                </div>
+            </div>
             
             <h2>Education</h2>
-            <p>Before M.Sc, I graduated from VBIT Hydearbad, with Bachelors in Computer Science Engineering (2021) (Course work: Data Structures, Operating Systems, Cloud Computing, Computer Architecture, Advanced Analytics). I was fortunate to work on interesting Technology Problems with Shivanand at Infosys Hyderabad.</p>
+            <p>Before M.Sc, I graduated from VBIT Hyderabad, with Bachelors in Computer Science Engineering (2021) (Course work: Data Structures, Operating Systems, Cloud Computing, Computer Architecture, Advanced Analytics). I was fortunate to work on interesting Technology Problems with Shivanand at Infosys Hyderabad.</p>
             <p>At GMU, I completed my Masters in Data Analytics, Modelling, Administration (Course work: Data Analysis and Analysis of Algorithms, Machine Learning, NLP, Operational Research) in the year 2023 & 2024 respectively.</p>
             <p>During these studies I was fortunate to do projects under Professors <a href="https://www.gmu.edu/profiles/dliao2" target="_blank">Lindi Liao</a>, Jean Pierre Auffret, <a href="https://www.gmu.edu/profiles/idassana">Isuru Dassanayake</a>.</p>
         </div>
