@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Ashritha Gugire</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f0f2f5;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1500px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a:hover {
+            color: #ddd;
+        }
+
+        .hero {
+            height: 40vh;
+            background-image: url('assests/projects.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .projects-container {
+            max-width: 1500px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-image {
+            height: 250px;
+            background: #f8f9fa;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .project-icon {
+            font-size: 4rem;
+            color: #667eea;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .project-description {
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-btn {
+            flex: 1;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .project-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #5a67d8, #6b46c1);
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            background: #2c5282;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #1a365d;
+            transform: translateY(-2px);
+        }
+
+
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .nav-content {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 0.9rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .projects-container {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="logo">Data Analysis| Data Science | Machine Learning | Visualizations</a>
+            <div class="nav-links">
+                <a href="firstpage.html">Home</a>
+                <a href="researchphase.html">Research</a>
+                <a href="projects.html">Projects</a>
+                <a href="Personal Interests.html">Non-Academic</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div>
+            <h1>PROJECTS</h1>
+            <p>Exploring problems, creating solutions, and learning through every project</p>
+        </div>
+    </div>
+
+    <div class="projects-container">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Projects</button>
+            <button class="filter-btn" data-filter="ml">AI/Machine Learning</button>
+            <button class="filter-btn" data-filter="visualization">Data Viz</button>
+            <button class="filter-btn" data-filter="analysis">Data Analysis</button>
+        </div>
+
+        <div class="projects-grid">
+            <div class="project-card" data-category="ml">
+                <div class="project-image">
+                    <img src="assests/AI Bot.jpg" alt="Project Image" class="project-img">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Intelligent Customer Support Assistant with RAG Architecture</h3>
+                    <p class="project-description">
+                        Developed an AI-powered customer support system utilizing Retrieval-Augmented Generation (RAG) architecture to provide intelligent, context-aware responses to customer inquiries. The system combines document retrieval with large language models to deliver accurate, source-backed answers while maintaining conversation context.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Complex Posts</span>
+                        <span class="tag">Content Simplifier</span>
+                        <span class="tag">Context provider</span>
+                        <span class="tag">Get Insights</span>
+                        
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/Ashritha-gugire/GenAI-Customer-Support-Assistant-/tree/main" class="project-btn btn-primary" target="_blank">View Project</a>
+                        <a href="assests/LinkedIn.mp4" class="project-btn btn-secondary">Live Demo</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="ml">
+                <div class="project-image">
+                    <img src="assests/AI-in-Sentiment-Analysis-1.jpg" alt="Project Image" class="project-img">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Multimodal Sentiment Analysis AI Web App</h3>
+                    <p class="project-description">
+                        Developed an interactive Streamlit-based AI web application that performs multimodal sentiment analysis by integrating both text and image inputs. This end-to-end project leverages state-of-the-art NLP and computer vision models, including:
+
+RoBERTa for textual sentiment classification
+
+DistilRoBERTa for fine-grained emotion detection
+
+OpenAI's CLIP model for visual sentiment inference and emotion matching with images
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Python, Streamlit, PyTorch</span>
+                        <span class="tag">Hugging Face Transformers, Plotly, OpenAI CLIP</span>
+                        <span class="tag">TextBlob, PIL, NumPy, Pandas</span>
+                        
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/Ashritha-gugire/Multimodal-Sentiment-Analysis" class="project-btn btn-primary" target="_blank">View Project</a>
+                        <a href="assests/LinkedIn.mp4" class="project-btn btn-secondary">Live Demo</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="project-card" data-category="ml">
+                <div class="project-image">
+                    <img src="assests/LinkedIn image.png" alt="Project Image" class="project-img">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">LinkedIn's Technical Jargon</h3>
+                    <p class="project-description">
+                        Browser extension that automatically analyzes and simplifies complex technical content on LinkedIn, transforming industry jargon into clear, accessible explanations for professionals seeking to stay informed without getting overwhelmed
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Complex Posts</span>
+                        <span class="tag">Content Simplifier</span>
+                        <span class="tag">Context provider</span>
+                        <span class="tag">Get Insights</span>
+                        
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/Ashritha-gugire/Tenzor-LinkedIn-Extension" class="project-btn btn-primary" target="_blank">View Project</a>
+                        <a href="assests/LinkedIn.mp4" class="project-btn btn-secondary">Live Demo</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card" data-category="analysis visualization">
+                <div class="project-image">
+                    <img src="assests/data viz.png" alt="Project Image" class="project-img">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Redesigning Policy Data: Interactive Visualization of US Education vs Prison Spending</h3>
+                    <p class="project-description">
+This comprehensive data visualization project analyzes the relationship between education funding, prison costs, and handgun homicides across US states. The project redesigns ineffective pie charts and dot plots into interactive, insightful visualizations that reveal critical patterns in government spending priorities.                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Data Visualization</span>
+                        <span class="tag">Statistical Analysis</span>
+                        <span class="tag">Regional Mapping</span>
+                        <span class="tag">Public Policy</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/Ashritha-gugire/Statistical-analysis-and-Data-visualizations/blob/main/Redesigning%20Graphs.md" class="project-btn btn-primary" target="_blank">View Project</a>
+                        <a href="assests/education_prison_dashboard.html" class="project-btn btn-secondary">Live Demo</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="ml">
+                <div class="project-image">
+                    <img src="assests/CNN.jpg" alt="Project Image" class="project-img">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Skin Cancer Diagnosis with PyTorch</h3>
+                    <p class="project-description">
+                        Advanced CNN-based image processing system for identifying skin cancer types from 10,000+ clinical images using modified ResNetX101 architecture.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">PyTorch</span>
+                        <span class="tag">CNN</span>
+                        <span class="tag">Medical Imaging</span>
+                        <span class="tag">ResNet</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/Ashritha-gugire/skin-cancer-diagnosis-pytorch" class="project-btn btn-primary" target="_blank">View Code</a>
+                        <a href="#" class="project-btn btn-secondary">Documentation</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="visualization analysis">
+                <div class="project-image">
+                    <img src="assests/dashboard.png" alt="Project Image" class="project-img">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Dashboards</h3>
+                    <p class="project-description">
+                        INteractive Dashboards developed with Tableau, D3.js..etc
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Tableau</span>
+                        <span class="tag">Data Visulaizations</span>
+                        <span class="tag">Javascript</span>
+                        <span class="tag">Python</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="Dashboard.html" class="project-btn btn-primary" target="_blank">View Dashboards</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+
+                const filter = button.getAttribute('data-filter');
+                
+                projectCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category').includes(filter)) {
+                        card.style.display = 'block';
+                        card.style.animation = 'fadeInUp 0.5s ease forwards';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Add hover effect to cards
+        projectCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

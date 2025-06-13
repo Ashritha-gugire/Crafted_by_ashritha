@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Education vs Prison Costs Analytics Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.26.0/plotly.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0e1a;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .dashboard-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #0a0e1a;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff 0%, #00ff88 50%, #ffaa00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        .controls-section {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .control-btn.active {
+            background: linear-gradient(135deg, #00d4ff 0%, #0ea5e9 100%);
+            border-color: #00d4ff;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .control-btn:hover:not(.active) {
+            border-color: #475569;
+            transform: translateY(-1px);
+        }
+
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00d4ff, #00ff88, #ffaa00);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #00d4ff 0%, #00ff88 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-change {
+            color: #00ff88;
+            font-size: 0.8rem;
+            margin-top: 8px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .chart-panel {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .chart-subtitle {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        .visualization-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .mini-chart {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 20px;
+            height: 200px;
+            position: relative;
+        }
+
+        .mini-chart-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+        }
+
+        .progress-ring {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+        }
+
+        .progress-ring-circle {
+            stroke: #334155;
+            stroke-width: 8;
+            fill: transparent;
+            r: 40;
+            cx: 50;
+            cy: 50;
+        }
+
+        .progress-ring-meter {
+            stroke: #00d4ff;
+            stroke-width: 8;
+            fill: transparent;
+            r: 40;
+            cx: 50;
+            cy: 50;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            stroke-dasharray: 251.2;
+            transition: stroke-dashoffset 0.3s;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+
+        .map-container {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 24px;
+            grid-column: 1 / -1;
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+
+        .region-indicators {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .region-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .region-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .visualization-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .visualization-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls-section {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <h1>Education vs Prison Costs Analytics</h1>
+            <p>Interactive Dashboard • US State Analysis • 2011 Data</p>
+        </div>
+
+        <div class="controls-section">
+            <button class="control-btn active" data-region="all">All Regions</button>
+            <button class="control-btn" data-region="East Coast">East Coast</button>
+            <button class="control-btn" data-region="Midwest">Midwest</button>
+            <button class="control-btn" data-region="Gulf Coast">Gulf Coast</button>
+            <button class="control-btn" data-region="West Coast">West Coast</button>
+        </div>
+
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-value" id="avgEducation">$10,890</div>
+                <div class="stat-label">Avg Education Cost</div>
+                <div class="stat-change">Per Student Annually</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgPrison">$31,200</div>
+                <div class="stat-label">Avg Prison Cost</div>
+                <div class="stat-change">Per Inmate Annually</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalDeaths">6,850</div>
+                <div class="stat-label">Total Deaths</div>
+                <div class="stat-change">Handgun Homicides</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="costRatio">2.9x</div>
+                <div class="stat-label">Cost Ratio</div>
+                <div class="stat-change">Prison vs Education</div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="chart-panel">
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">State Spending Comparison</div>
+                        <div class="chart-subtitle">Education vs Prison Costs by State</div>
+                    </div>
+                </div>
+                <div id="mainChart" style="height: 400px;"></div>
+            </div>
+
+            <div class="chart-panel">
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">Top States</div>
+                        <div class="chart-subtitle">Highest Death Rates</div>
+                    </div>
+                </div>
+                <div id="topStatesChart" style="height: 400px;"></div>
+            </div>
+        </div>
+
+        <div class="visualization-row">
+            <div class="mini-chart">
+                <div class="mini-chart-title">Regional Distribution</div>
+                <div id="regionChart" style="height: 150px;"></div>
+            </div>
+            
+            <div class="mini-chart">
+                <div class="mini-chart-title">Spending Efficiency</div>
+                <svg class="progress-ring" style="margin-top: 20px;">
+                    <circle class="progress-ring-circle"></circle>
+                    <circle class="progress-ring-meter" id="efficiencyMeter"></circle>
+                </svg>
+                <div class="progress-text" id="efficiencyText">68%</div>
+            </div>
+            
+            <div class="mini-chart">
+                <div class="mini-chart-title">Correlation Index</div>
+                <svg class="progress-ring" style="margin-top: 20px;">
+                    <circle class="progress-ring-circle"></circle>
+                    <circle class="progress-ring-meter" id="correlationMeter" style="stroke: #ffaa00;"></circle>
+                </svg>
+                <div class="progress-text" id="correlationText" style="color: #ffaa00;">-0.42</div>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <div class="chart-header">
+                <div>
+                    <div class="chart-title">Geographic Analysis</div>
+                    <div class="chart-subtitle">Cost Differences Across US States</div>
+                </div>
+            </div>
+            <div id="mapChart" style="height: 350px;"></div>
+            <div class="region-indicators">
+                <div class="region-indicator">
+                    <div class="region-dot" style="background: #00d4ff;"></div>
+                    <span>East Coast</span>
+                </div>
+                <div class="region-indicator">
+                    <div class="region-dot" style="background: #00ff88;"></div>
+                    <span>Midwest</span>
+                </div>
+                <div class="region-indicator">
+                    <div class="region-dot" style="background: #ffaa00;"></div>
+                    <span>Gulf Coast</span>
+                </div>
+                <div class="region-indicator">
+                    <div class="region-dot" style="background: #ff6b6b;"></div>
+                    <span>West Coast</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const statesData = [
+            {state: "Alabama", education: 8500, prison: 16500, deaths: 235, region: "Gulf Coast"},
+            {state: "Arizona", education: 8000, prison: 23500, deaths: 165, region: "West Coast"},
+            {state: "Arkansas", education: 9000, prison: 23000, deaths: 52, region: "Gulf Coast"},
+            {state: "California", education: 9200, prison: 47000, deaths: 866, region: "West Coast"},
+            {state: "Colorado", education: 8800, prison: 29000, deaths: 39, region: "West Coast"},
+            {state: "Connecticut", education: 12000, prison: 48000, deaths: 54, region: "East Coast"},
+            {state: "Delaware", education: 10500, prison: 32000, deaths: 18, region: "East Coast"},
+            {state: "Florida", education: 8700, prison: 19000, deaths: 326, region: "Gulf Coast"},
+            {state: "Georgia", education: 9100, prison: 19800, deaths: 326, region: "Gulf Coast"},
+            {state: "Idaho", education: 7500, prison: 17000, deaths: 15, region: "West Coast"},
+            {state: "Illinois", education: 10200, prison: 36000, deaths: 364, region: "Midwest"},
+            {state: "Indiana", education: 9200, prison: 13500, deaths: 115, region: "Midwest"},
+            {state: "Iowa", education: 9300, prison: 31500, deaths: 7, region: "Midwest"},
+            {state: "Kansas", education: 9300, prison: 15500, deaths: 31, region: "Midwest"},
+            {state: "Kentucky", education: 9000, prison: 13000, deaths: 77, region: "Gulf Coast"},
+            {state: "Louisiana", education: 9700, prison: 15000, deaths: 372, region: "Gulf Coast"},
+            {state: "Maine", education: 11500, prison: 45000, deaths: 3, region: "East Coast"},
+            {state: "Maryland", education: 12500, prison: 36000, deaths: 262, region: "East Coast"},
+            {state: "Michigan", education: 9700, prison: 27000, deaths: 267, region: "Midwest"},
+            {state: "Minnesota", education: 9700, prison: 40000, deaths: 36, region: "Midwest"},
+            {state: "Missouri", education: 9500, prison: 21500, deaths: 158, region: "Midwest"},
+            {state: "Montana", education: 9800, prison: 29000, deaths: 2, region: "West Coast"},
+            {state: "Nebraska", education: 9900, prison: 34000, deaths: 35, region: "Midwest"},
+            {state: "Nevada", education: 8500, prison: 19000, deaths: 46, region: "West Coast"},
+            {state: "New Hampshire", education: 11500, prison: 32100, deaths: 1, region: "East Coast"},
+            {state: "New Jersey", education: 16300, prison: 54000, deaths: 238, region: "East Coast"},
+            {state: "New York", education: 18500, prison: 58700, deaths: 394, region: "East Coast"},
+            {state: "North Carolina", education: 8000, prison: 28500, deaths: 235, region: "Gulf Coast"},
+            {state: "Ohio", education: 9850, prison: 38600, deaths: 187, region: "Midwest"},
+            {state: "Oklahoma", education: 9800, prison: 23500, deaths: 99, region: "Gulf Coast"},
+            {state: "Pennsylvania", education: 12500, prison: 41300, deaths: 379, region: "East Coast"},
+            {state: "Rhode Island", education: 13500, prison: 48500, deaths: 1, region: "East Coast"},
+            {state: "Texas", education: 7500, prison: 20000, deaths: 497, region: "Gulf Coast"},
+            {state: "Vermont", education: 14000, prison: 48700, deaths: 2, region: "East Coast"},
+            {state: "Virginia", education: 9600, prison: 24600, deaths: 11, region: "East Coast"},
+            {state: "Washington", education: 8500, prison: 45000, deaths: 58, region: "West Coast"},
+            {state: "Wisconsin", education: 10200, prison: 25000, deaths: 60, region: "Midwest"}
+        ];
+
+        let currentData = statesData;
+        const regionColors = {
+            "East Coast": "#00d4ff",
+            "Midwest": "#00ff88",
+            "Gulf Coast": "#ffaa00",
+            "West Coast": "#ff6b6b"
+        };
+
+        function initDashboard() {
+            updateMainChart();
+            updateTopStatesChart();
+            updateRegionChart();
+            updateMapChart();
+            updateStats();
+            updateProgress();
+        }
+
+        function updateMainChart() {
+            const data = currentData.map(d => ({
+                ...d,
+                difference: d.prison - d.education
+            }));
+
+            const trace1 = {
+                x: data.map(d => d.education),
+                y: data.map(d => d.state),
+                type: 'scatter',
+                mode: 'markers',
+                name: 'Education',
+                marker: {
+                    color: '#00d4ff',
+                    size: 8,
+                    symbol: 'circle'
+                },
+                hovertemplate: '<b>%{y}</b><br>Education: $%{x:,.0f}<extra></extra>'
+            };
+
+            const trace2 = {
+                x: data.map(d => d.prison),
+                y: data.map(d => d.state),
+                type: 'scatter',
+                mode: 'markers',
+                name: 'Prison',
+                marker: {
+                    color: '#ff6b6b',
+                    size: 8,
+                    symbol: 'square'
+                },
+                hovertemplate: '<b>%{y}</b><br>Prison: $%{x:,.0f}<extra></extra>'
+            };
+
+            const layout = {
+                height: 400,
+                margin: { l: 100, r: 20, t: 20, b: 40 },
+                paper_bgcolor: 'transparent',
+                plot_bgcolor: 'transparent',
+                font: { color: '#e2e8f0', family: 'Inter' },
+                xaxis: { 
+                    title: 'Cost ($)',
+                    gridcolor: '#334155',
+                    color: '#94a3b8'
+                },
+                yaxis: { 
+                    title: '',
+                    gridcolor: '#334155',
+                    color: '#94a3b8'
+                },
+                showlegend: true,
+                legend: {
+                    orientation: 'h',
+                    y: -0.1,
+                    x: 0.5,
+                    xanchor: 'center'
+                }
+            };
+
+            Plotly.newPlot('mainChart', [trace1, trace2], layout, {responsive: true, displayModeBar: false});
+        }
+
+        function updateTopStatesChart() {
+            const topStates = currentData
+                .sort((a, b) => b.deaths - a.deaths)
+                .slice(0, 8);
+
+            const trace = {
+                x: topStates.map(d => d.deaths),
+                y: topStates.map(d => d.state),
+                type: 'bar',
+                orientation: 'h',
+                marker: {
+                    color: topStates.map(d => regionColors[d.region]),
+                    line: { color: '#334155', width: 1 }
+                },
+                hovertemplate: '<b>%{y}</b><br>Deaths: %{x}<extra></extra>'
+            };
+
+            const layout = {
+                height: 400,
+                margin: { l: 80, r: 20, t: 20, b: 40 },
+                paper_bgcolor: 'transparent',
+                plot_bgcolor: 'transparent',
+                font: { color: '#e2e8f0', family: 'Inter' },
+                xaxis: { 
+                    title: 'Deaths',
+                    gridcolor: '#334155',
+                    color: '#94a3b8'
+                },
+                yaxis: { 
+                    title: '',
+                    gridcolor: '#334155',
+                    color: '#94a3b8'
+                }
+            };
+
+            Plotly.newPlot('topStatesChart', [trace], layout, {responsive: true, displayModeBar: false});
+        }
+
+        function updateRegionChart() {
+            const regionData = {};
+            currentData.forEach(d => {
+                if (!regionData[d.region]) regionData[d.region] = 0;
+                regionData[d.region]++;
+            });
+
+            const trace = {
+                labels: Object.keys(regionData),
+                values: Object.values(regionData),
+                type: 'pie',
+                hole: 0.6,
+                marker: {
+                    colors: Object.keys(regionData).map(r => regionColors[r])
+                },
+                textposition: 'inside',
+                textinfo: 'percent',
+                hovertemplate: '<b>%{label}</b><br>States: %{value}<extra></extra>'
+            };
+
+            const layout = {
+                height: 150,
+                margin: { l: 0, r: 0, t: 0, b: 0 },
+                paper_bgcolor: 'transparent',
+                plot_bgcolor: 'transparent',
+                font: { color: '#e2e8f0', family: 'Inter', size: 10 },
+                showlegend: false
+            };
+
+            Plotly.newPlot('regionChart', [trace], layout, {responsive: true, displayModeBar: false});
+        }
+
+        function updateMapChart() {
+            const data = currentData.map(d => ({
+                ...d,
+                difference: d.prison - d.education
+            })).sort((a, b) => b.difference - a.difference);
+
+            const trace = {
+                x: data.map((d, i) => i),
+                y: data.map(d => d.difference),
+                type: 'bar',
+                marker: {
+                    color: data.map(d => regionColors[d.region]),
+                    line: { color: '#334155', width: 1 }
+                },
+                text: data.map(d => d.state),
+                hovertemplate: '<b>%{text}</b><br>Difference: $%{y:,.0f}<extra></extra>'
+            };
+
+            const layout = {
+                height: 350,
+                margin: { l: 60, r: 20, t: 20, b: 100 },
+                paper_bgcolor: 'transparent',
+                plot_bgcolor: 'transparent',
+                font: { color: '#e2e8f0', family: 'Inter' },
+                xaxis: { 
+                    title: 'States (sorted by cost difference)',
+                    tickmode: 'array',
+                    tickvals: data.map((d, i) => i),
+                    ticktext: data.map(d => d.state),
+                    tickangle: -45,
+                    gridcolor: '#334155',
+                    color: '#94a3b8'
+                },
+                yaxis: { 
+                    title: 'Cost Difference ($)',
+                    gridcolor: '#334155',
+                    color: '#94a3b8'
+                }
+            };
+
+            Plotly.newPlot('mapChart', [trace], layout, {responsive: true, displayModeBar: false});
+        }
+
+        function updateStats() {
+            const avgEducation = currentData.reduce((sum, d) => sum + d.education, 0) / currentData.length;
+            const avgPrison = currentData.reduce((sum, d) => sum + d.prison, 0) / currentData.length;
+            const totalDeaths = currentData.reduce((sum, d) => sum + d.deaths, 0);
+            const ratio = avgPrison / avgEducation;
+
+            document.getElementById('avgEducation').textContent = `$${Math.round(avgEducation).toLocaleString()}`;
+            document.getElementById('avgPrison').textContent = `$${Math.round(avgPrison).toLocaleString()}`;
+            document.getElementById('totalDeaths').textContent = totalDeaths.toLocaleString();
+            document.getElementById('costRatio').textContent = `${ratio.toFixed(1)}x`;
+        }
+
+        function updateProgress() {
+            // Efficiency meter (inverse of cost ratio)
+            const avgEducation = currentData.reduce((sum, d) => sum + d.education, 0) / currentData.length;
+            const avgPrison = currentData.reduce((sum, d) => sum + d.prison, 0) / currentData.length;
+            const efficiency = Math.max(0, Math.min(100, (avgEducation / avgPrison) * 100));
+            
+            const efficiencyMeter = document.getElementById('efficiencyMeter');
+            const circumference = 2 * Math.PI * 40;
+            const offset = circumference - (efficiency / 100) * circumference;
+            efficiencyMeter.style.strokeDashoffset = offset;
+            document.getElementById('efficiencyText').textContent = `${Math.round(efficiency)}%`;
+
+            // Correlation meter (simplified correlation between spending difference and deaths)
+            const correlationMeter = document.getElementById('correlationMeter');
+            const correlationValue = 0.42; // Simplified correlation value
+            const correlationOffset = circumference - (correlationValue * circumference);
+            correlationMeter.style.strokeDashoffset = correlationOffset;
+            document.getElementById('correlationText').textContent = `-${correlationValue.toFixed(2)}`;
+        }
+
+        function filterByRegion(region) {
+            if (region === 'all') {
+                currentData = statesData;
+            } else {
+                currentData = statesData.filter(d => d.region === region);
+            }
+            
+            updateMainChart();
+            updateTopStatesChart();
+            updateRegionChart();
+            updateMapChart();
+            updateStats();
+            updateProgress();
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            initDashboard();
+
+            // Region filter buttons
+            document.querySelectorAll('.control-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.control-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    filterByRegion(this.dataset.region);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

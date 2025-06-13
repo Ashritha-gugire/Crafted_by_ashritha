@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research - Ashritha Gugire</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c5282;
+            --secondary-color: #1a365d;
+            --text-primary: #333;
+            --text-secondary: #444;
+            --surface-white: #ffffff;
+            --surface-gray: #f8f9fa;
+            --border-color: #e5e7eb;
+            --background-gray: #f0f2f5;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background: var(--background-gray);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(0, 0, 0, 0.8);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1500px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #ddd;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 40vh;
+            background-image: url('assests/Research.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 1px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Research Overview */
+        .research-overview {
+            background: var(--surface-white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .research-focus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .focus-card {
+            padding: 2rem;
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            background: var(--surface-white);
+        }
+
+        .focus-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(44, 82, 130, 0.1);
+        }
+
+        .focus-icon {
+            width: 60px;
+            height: 60px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .focus-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .focus-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Current Projects */
+        .current-projects {
+            margin-bottom: 4rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);  /* Forces exactly 3 columns */
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: var(--surface-white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-header {
+            padding: 2rem 2rem 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-status {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            padding: 0.3rem 0.8rem;
+            background: #f8f9fa;
+            color: var(--primary-color);
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .project-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 1rem;
+            background: var(--surface-gray);
+            border-radius: 10px;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Methodology Section */
+        .methodology {
+            background: var(--surface-white);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 4rem;
+        }
+
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);  /* Forces exactly 4 columns */
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .method-card {
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            background: var(--surface-gray);
+            border-radius: 0 10px 10px 0;
+        }
+
+        .method-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .method-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .method-list li {
+            padding: 0.3rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .method-list li::before {
+            content: "→";
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Publications */
+        .publications {
+            background: var(--surface-white);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 4rem;
+        }
+
+        .publication-card {
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .publication-card:hover {
+            border-color: var(--primary-blue);
+            background: var(--surface-gray);
+        }
+
+        .pub-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .pub-status {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .pub-abstract {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Links Section */
+        .links-section {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem 2rem;
+            background: var(--surface-white);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .link-card:hover {
+            border-color: var(--primary-color);
+            background: #f8f9fa;
+            transform: translateY(-3px);
+        }
+
+        .link-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .link-text {
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .nav-content {
+                padding: 1rem;
+            }
+
+            .main-content {
+                padding: 2rem 1rem;
+            }
+
+            .research-overview,
+            .methodology,
+            .publications {
+                padding: 2rem 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .links-section {
+                flex-direction: column;
+            }
+
+            .link-card {
+                min-width: unset;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Code styling */
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--surface-gray);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        /* Research Links */
+        .research-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .research-link:hover {
+            color: var(--secondary-color);
+            border-bottom-color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .research-link::after {
+            content: "🔗";
+            font-size: 0.8rem;
+            margin-left: 0.3rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .research-link:hover::after {
+            opacity: 1;
+        }
+
+        /* Research Impact Grid */
+        .research-impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .impact-card {
+            padding: 1.5rem;
+            background: var(--surface-gray);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(44, 82, 130, 0.1);
+        }
+
+        .impact-card h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .impact-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Technical Achievements */
+        .technical-achievements {
+            background: var(--surface-white);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            margin-top: 2rem;
+        }
+
+        .achievement-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .achievement-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .achievement-list li:last-child {
+            border-bottom: none;
+        }
+
+        .achievement-list li::before {
+            content: "▶";
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-right: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="logo">Ashritha Gugire</a>
+            <div class="nav-links">
+                <a href="firstpage.html">Home</a>
+                <a href="researchphase.html" class="active">Research</a>
+                <a href="projects.html">Projects</a>
+                <a href="Personal Interests.html">Non-Academic</a>
+            </div>
+        </div>
+    </nav>
+
+        <div class="hero">
+            <h1><b>RESEARCH</b></h1>
+        </div>
+
+    <div class="main-content">
+        <div class="links-section">
+            <a href="/assests/Ashritha Gugire_resume_Data Scientist.pdf" class="link-card">
+                <div class="link-text">Curriculum Vitae</div>
+            </a>
+            <a href="https://github.com/Ashritha-gugire" class="link-card">
+                <div class="link-text">GitHub Repository</div>
+            </a>
+        </div>
+
+        <section class="research-overview fade-in">
+            <h2 class="section-title">Research Objective</h2>
+            <p style="color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 2rem;">
+                My research advances the computational understanding of urban mobility through innovative Data Science and Machine Learning methodologies that decode complex human movement patterns and their emergent collective behaviors. Operating at the intersection of Data Analytics, Urban Mobility, and Behavioral Economics, I leverage cutting-edge ML algorithms and statistical modeling techniques to analyze large-scale mobility datasets, investigating how individual transportation choices aggregate into system-wide patterns and how anomalies emerge within these dynamic networks.</p>
+            
+            <p style="color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 2rem;">
+                My work addresses pressing societal challenges including urban congestion, public safety, and equitable access to transportation, while advancing our theoretical understanding of collective human behavior in spatiotemporal contexts. By leveraging advanced techniques such as <strong><a href="#knowledge-graphs-explorer" class="research-link">Knowledge Graph Construction</a></strong>, <strong><a href="#ensemble-methods-blog" class="research-link">Multi-Dimensional Ensemble Learning</a></strong>, and <strong><a href="#transportation-mode-analysis" class="research-link">Transportation Mode Classification</a></strong>, I develop frameworks that can identify subtle patterns in mobility data, classify anomalous behaviors, and predict transportation choices under various conditions.
+            </p>
+
+            <div class="research-impact-grid">
+                <div class="impact-card">
+                    <h4>Real-Time Anomaly Detection</h4>
+                    <p>Developing <strong><a href="#real-time-dashboard" class="research-link">interactive dashboards</a></strong> that detect behavioral anomalies in streaming mobility data using ensemble methods, achieving <strong>93% accuracy</strong> in transportation mode classification and identifying <strong>300 anomalous agents</strong> from large-scale simulated populations.</p>
+                </div>
+                
+                <div class="impact-card">
+                    <h4>Knowledge Graph Intelligence</h4>
+                    <p>Creating <strong><a href="#knowledge-graph-visualization" class="research-link">semantic graph representations</a></strong> that capture temporal patterns, spatial relationships, and causal inference mechanisms. These graphs model agent interactions across <strong>15+ different approaches</strong>, revealing emergent collective behaviors invisible when examining individual trajectories.</p>
+                </div>
+                
+                <div class="impact-card">
+                    <h4>Crowd Pattern Analytics</h4>
+                    <p>Analyzing visitor flow patterns and <strong><a href="#crowd-analytics-blog" class="research-link">rare event detection</a></strong> in urban environments, including the analysis of <strong>Friday prayer gatherings</strong> that show 5-10x normal visitor spikes at religious locations, contributing to <strong><a href="#poi-analysis-dashboard" class="research-link">Point-of-Interest analytics</a></strong>.</p>
+                </div>
+                
+                <div class="impact-card">
+                    <h4>Behavioral Economics Applications</h4>
+                    <p>Applying <strong><a href="#mechanism-design-blog" class="research-link">Mechanism Design for Social Good</a></strong> and behavioral pattern recognition to understand how economic incentives influence mobility choices, particularly in scenarios involving <strong><a href="#mode-choice-analysis" class="research-link">deliberate obfuscation or "hiding" behaviors</a></strong> in transportation networks.</p>
+                </div>
+            </div>
+
+            <div class="technical-achievements">
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--text-primary);">Key Technical Contributions</h3>
+                <ul class="achievement-list">
+                    <li><strong>Multi-Dimensional Ensemble Framework:</strong> Developed novel approaches addressing both individual and <strong><a href="#group-anomaly-blog" class="research-link">group-level anomalies</a></strong> across distinct taxonomic categories (point, contextual, collective, and distributional anomalies)</li>
+                    <li><strong>Advanced ML Pipeline:</strong> Built comprehensive classification systems using <strong><a href="#ensemble-methods-deep-dive" class="research-link">Random Forest + Gradient Boosting ensembles</a></strong>, <strong><a href="#gmm-clustering-blog" class="research-link">Gaussian Mixture Models</a></strong>, and <strong><a href="#dbscan-outlier-detection" class="research-link">DBSCAN outlier detection</a></strong></li>
+                    <li><strong>Temporal Analysis Methods:</strong> Implemented <strong><a href="#time-series-dashboard" class="research-link">rolling window analysis</a></strong> with 96-period (24-hour) windows for detecting visitor pattern anomalies and <strong><a href="#z-score-analysis-blog" class="research-link">Z-score based rare event detection</a></strong></li>
+                    <li><strong>Graph-Based Intelligence:</strong> Created <strong><a href="#graph-construction-tutorial" class="research-link">15+ knowledge graph approaches</a></strong> incorporating agent behaviors, temporal nodes, and <strong><a href="#edge-weight-analysis" class="research-link">edge weight variability analysis</a></strong> for distinguishing anomalous vs. non-anomalous patterns</li>
+                </ul>
+            </div>
+            
+            <div class="research-focus-grid">
+                <div class="focus-card">
+                    <h3 class="focus-title">Anomaly Detection</h3>
+                    <p class="focus-description">
+                        Developing multi-dimensional ensemble frameworks for detecting and classifying individual and group anomalies in mobility data using statistical methods and machine learning.
+                    </p>
+                </div>
+                <div class="focus-card">
+                    <h3 class="focus-title">Knowledge Graphs</h3>
+                    <p class="focus-description">
+                        Creating semantic representations that capture relationships between mobility patterns, temporal behaviors, and spatial contexts for enhanced interpretability.
+                    </p>
+                </div>
+                <div class="focus-card">
+                    <h3 class="focus-title">Transportation Mode Choice Analysis</h3>
+                    <p class="focus-description">
+                        Building robust classification systems for transportation mode detection, especially in scenarios involving deliberate obfuscation or "hiding" behaviors.
+                    </p>
+                </div>
+                <div class="focus-card">
+                    <h3 class="focus-title">Crowd Pattern Analysis</h3>
+                    <p class="focus-description">
+                        Analyzing collective movement behaviors, visitor flow patterns, and rare event detection in urban environments using time-series analysis.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="current-projects fade-in">
+            <h2 class="section-title">Current Research Projects</h2>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">Multi-Dimensional Ensemble Framework for Mobility Anomaly Detection</h3>
+                        <span class="project-status">Development Phase</span>
+                    </div>
+                    <div class="project-content">
+                        <p class="project-description">
+                            Developing a novel framework that addresses both individual and group-level anomalies across distinct taxonomic categories, with emphasis on collective behavioral deviations.
+                        </p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Ensemble Learning</span>
+                            <span class="tech-tag">Knowledge Graphs</span>
+                            <span class="tech-tag">Group Anomaly Detection</span>
+                            <span class="tech-tag">YJMob100K Dataset</span>
+                        </div>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <div class="metric-value"> Emergent Behaviors</div>
+                                <div class="metric-label">Group anomaly detection and classification</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">4</div>
+                                <div class="metric-label">Anomaly Types</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">Transportation Mode Classification with Hidden Patterns</h3>
+                        <span class="project-status">In QA- production</span>
+                    </div>
+                    <div class="project-content">
+                        <p class="project-description">
+                            Advanced pipeline for classifying transportation modes using ensemble methods, GMM clustering, and PCA, with focus on detecting deliberate obfuscation.
+                        </p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Random Forest</span>
+                            <span class="tech-tag">Gradient Boosting</span>
+                            <span class="tech-tag">Gaussian Mixture Models</span>
+                            <span class="tech-tag">DBSCAN</span>
+                        </div>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <div class="metric-value">93%</div>
+                                <div class="metric-label">Accuracy</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">44K+</div>
+                                <div class="metric-label">Trip Records</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">Knowledge Graph Representation for Agent Behaviors</h3>
+                        <span class="project-status">Advanced Research Phase</span>
+                    </div>
+                    <div class="project-content">
+                        <p class="project-description">
+                            Creating graph-based representations that capture temporal patterns, spatial relationships, and behavioral anomalies through semantic knowledge structures.
+                        </p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Graph Theory</span>
+                            <span class="tech-tag">Semantic Analysis</span>
+                            <span class="tech-tag">Temporal Modeling</span>
+                            <span class="tech-tag">Causal Inference</span>
+                        </div>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <div class="metric-value">15</div>
+                                <div class="metric-label">Graph Approaches</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0.92</div>
+                                <div class="metric-label">F1 Score</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="methodology fade-in">
+            <h2 class="section-title">Research Methodologies used so-far</h2>
+            
+            <div class="methodology-grid">
+                <div class="method-card">
+                    <h3 class="method-title">Machine Learning Techniques</h3>
+                    <ul class="method-list">
+                        <li>Supervised Learning (Random Forest, Logistic Regression)</li>
+                        <li>Unsupervised Learning (K-Means, DBSCAN, PCA)</li>
+                        <li>Ensemble Methods (Gradient Boosting, Soft Voting)</li>
+                        <li>Deep Learning (Transformers, CNNs, Diffusion Models)</li>
+                        <li>Fine-tuning & Parameter Efficient Methods (LoRA)</li>
+
+                    </ul>
+                </div>
+                
+                <div class="method-card">
+                    <h3 class="method-title">Statistical Analysis</h3>
+                    <ul class="method-list">
+                        <li>Interquartile Range (IQR) Analysis</li>
+                        <li>Z-Score Anomaly Detection</li>
+                        <li>Time Series Decomposition</li>
+                        <li>Correlation Analysis</li>
+                    </ul>
+                </div>
+                
+                <div class="method-card">
+                    <h3 class="method-title">Graph-Based Methods</h3>
+                    <ul class="method-list">
+                        <li>Knowledge Graph Construction</li>
+                        <li>Semantic Relationship Modeling</li>
+                        <li>Network Analysis</li>
+                        <li>Causal Inference on Graphs</li>
+                        <li>RAG</li>
+                    </ul>
+                </div>
+                
+                <div class="method-card">
+                    <h3 class="method-title">Behavioral Economics</h3>
+                    <ul class="method-list">
+                        <li>Mechanism Design for Social Good</li>
+                        <li>Agent-Based Modeling</li>
+                        <li>Decision Theory Applications</li>
+                        <li>Behavioral Pattern Recognition</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="publications fade-in">
+            <h2 class="section-title">Publications & Working Papers</h2>
+            
+            <div class="publication-card">
+                <h3 class="pub-title">Multi-Dimensional Ensemble Framework for Mobility Anomaly Detection and Classification with Focus on Group Behaviors and Knowledge Graph Representation</h3>
+                <span class="pub-status"><strong><a href="assests/Initial Abstarct.pdf" class="research-link">Initial abstract</a></strong></span>
+                <p class="pub-abstract">
+                    This paper introduces a novel multi-dimensional ensemble framework that addresses both individual and group-level anomalies across distinct taxonomic categories. Our architecture implements specialized algorithms targeting collective behavioral deviations that cannot be identified by examining individual trajectories alone. Key innovations include group-aware detection mechanisms and knowledge graph representation for enhanced classification performance.
+                </p>
+            </div>
+            
+            <div class="publication-card">
+                <h3 class="pub-title">Knowledge Graph Approaches for Urban Mobility Pattern Analysis: A Comparative Study</h3>
+                <span class="pub-status"><strong><a href="assests/15plus knowledge graph paper.pdf" class="research-link">View Technical Paper</a><strong><a href="assests/knowledge_graph_visualizations.html" class="research-link">Dashboard</a></span>
+                <p class="pub-abstract">
+                    This study explores multiple knowledge graph construction approaches for representing agent behaviors, temporal patterns, and spatial relationships in urban mobility data. We compare 15 different graph-based methodologies and their effectiveness in capturing anomalous behaviors, with focus on edge weight variability and semantic relationship modeling.
+                </p>
+            </div>
+
+             <div class="publication-card">
+                <h3 class="pub-title">Advanced Transportation Mode Classification Pipeline: Detecting Hidden Patterns in Mobility Data</h3>
+                <span class="pub-status"><strong><a href="assests/Technical White paper three.pdf" class="research-link">View Technical Paper</a><strong><a href="assests/methodology_diagram.jpg" class="research-link">Fig.1</a><strong><a href="assests/performance_diagram.jpg" class="research-link">Fig.2</a><strong><a href="assests/feature_gmm_diagram.jpg" class="research-link">Fig.3 </a></span>
+                <p class="pub-abstract">
+                    We developed a comprehensive transportation mode classification pipeline that integrates statistical analysis with advanced machine learning techniques. Our approach achieves 93% accuracy through ensemble methods combining Random Forest and Gradient Boosting, with particular effectiveness in uncovering hidden or deceptive movement patterns using Gaussian Mixture Models and PCA dimensionality reduction.
+                </p>
+            </div>
+
+            <div class="publication-card">
+                <h3 class="pub-title">Advanced Machine Learning Framework Detects Suspicious Movement Patterns with 24% Higher Precision Than Traditional Methods</h3>
+                <span class="pub-status"><strong><a href="assests/Technical White paper one.pdf" class="research-link">View Technical Paper</a></span>
+                <p class="pub-abstract">
+                    This study explores multiple knowledge graph construction approaches for representing agent behaviors, temporal patterns, and spatial relationships in urban mobility data. We compare 15 different graph-based methodologies and their effectiveness in capturing anomalous behaviors, with focus on edge weight variability and semantic relationship modeling.
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Add hover effects to project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
